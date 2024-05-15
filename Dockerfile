@@ -1,5 +1,7 @@
 FROM php:8.2-apache
 
+RUN echo "America/Argentina/Buenos_Aires" > /etc/timezone
+
 # Install dependencies
 RUN apt-get update && \
     apt-get install -y \
@@ -26,6 +28,6 @@ WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 #Installing project dependences
-RUN chown -R www-data:www-data /project; \
+RUN chown -R www-data:www-data /var/www/html; \
     chmod 777 -R storage; \
     composer install; \

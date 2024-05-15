@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Requests\PatientStoreRequest;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class PatientController extends BaseController
@@ -12,10 +13,10 @@ class PatientController extends BaseController
     {
     }
 
-    public function store(PatientStoreRequest $request)
+    public function store(Request $request)
     {
         try {
-            dd($request->all());
+            dd(app()->env);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

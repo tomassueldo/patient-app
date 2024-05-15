@@ -5,11 +5,14 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            args:
+                APP_ENV: local
         ports:
-            - "8081:80"
+            - "9009:80"
         volumes:
             - .:/var/www/html
         environment:
+            APP_ENV: local
             APACHE_DOCUMENT_ROOT: /var/www/html/public
         depends_on:
             - db
@@ -17,12 +20,17 @@ services:
     db:
         image: mysql:5.7
         ports:
-            - "3307:3306"
+            - "3309:3306"
         environment:
             MYSQL_DATABASE: laravel
-            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: root
         volumes:
             - db_data:/var/lib/mysql
-
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - "9002:80"
+        environment:
+            - PMA_ARBITRARY=1
 volumes:
     db_data:

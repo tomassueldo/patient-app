@@ -17,7 +17,6 @@ class PatientStoreRequest extends FormRequest
     {
         return [
             'name' => 'Name',
-            'last_name' => 'Last Name',
             'email' => 'Email',
             'address' => 'Address',
             'phone_number' => 'Phone Number',
@@ -34,7 +33,6 @@ class PatientStoreRequest extends FormRequest
     {
         return [
             'name' => 'string|max:50|required',
-            'last_name' => 'string|max:50|required',
             'email' => [
                 'string',
                 'max:50',

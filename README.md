@@ -23,7 +23,7 @@ Once inside the directory execute the following commands:
 cp .env.develop .env
 docker-compose up --build -d
 ```
-Once finish the process of building the docker app, just in case, install all the dependencies with composer:
+Once you finish the process of building the Docker app, install all the dependencies with Composer::
 ```
 docker exec my_app_container composer install
 ```
@@ -44,7 +44,7 @@ Now that we have our docker app running, with the Apache server with PHP, MySQL,
 * Postman Repository: Additionally, if you prefer, you can try the API with Postman by downloading the collection from the folder /storage/attachments.
 
 ### A short video of the process of the store endpoint:
-
+![chrome_EGiKW6T59Z](https://github.com/tomassueldo/patient-app/assets/84208722/3b630368-66fa-4bdb-92f0-56e43bff3b5c)
 
 
 

@@ -14,6 +14,7 @@ services:
         environment:
             APP_ENV: local
             APACHE_DOCUMENT_ROOT: /var/www/html/public
+            TZ: "America/Argentina/Buenos_Aires"
         depends_on:
             - db
         container_name: my_app_container
@@ -25,6 +26,7 @@ services:
         environment:
             MYSQL_DATABASE: laravel
             MYSQL_ROOT_PASSWORD: root
+            TZ: "America/Argentina/Buenos_Aires"
         volumes:
             - db_data:/var/lib/mysql
         container_name: my_db_container

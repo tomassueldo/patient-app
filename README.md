@@ -41,6 +41,7 @@ Now that we have our docker app running, with the Apache server with PHP, MySQL,
     * Password: **root**
 * [Api Docs](http://localhost:9009/request-docs/)
     * Here you will have all the endpoints available for consumption, all you have to do is complete the request body parameters and the path parameters when it's necessary.
+* Postman Repository: Additionally, if you prefer, you can try the API with Postman by downloading the collection from the folder /storage/attachments.
 
 ### A short video of the process of the store endpoint:
 

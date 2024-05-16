@@ -63,11 +63,7 @@ class PatientRepository implements PatientRepositoryInterface
     public function update(array $data, Patient $patient)
     {
         try {
-            $patient->name = $data['name'];
-            $patient->address = $data['address'];
-            $patient->phone_number = $data['phone_number'];
-            $patient->document_image = $data['document_image'];
-            $patient->save();
+            $patient->update($data);
             return $patient;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

@@ -40,7 +40,7 @@ class PatientService
      */
     public function find(Patient $patient)
     {
-            return $this->patientRepository->find($patient->id);
+        return $this->patientRepository->find($patient->id);
     }
 
     /**
@@ -82,11 +82,13 @@ class PatientService
     {
         $patient = $this->patientRepository->find($patient->id);
 
-        $this->deleteOldImage($patient->document_image);
-        $imagePath = $this->storeImage($data->getDocumentImage());
-        $data->setDocumentImage($imagePath);
+        if (!is_null($data->getDocumentImage())) {
+            $this->deleteOldImage($patient->document_image);
+            $imagePath = $this->storeImage($data->getDocumentImage());
+            $data->setDocumentImage($imagePath);
+        }
 
-        return $this->patientRepository->update((array)$data, $patient);
+        return $this->patientRepository->update($data->hideNull()->toArray(), $patient);
     }
 
     /**

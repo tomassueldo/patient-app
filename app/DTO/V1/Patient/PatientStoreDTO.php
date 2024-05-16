@@ -2,7 +2,9 @@
 
 namespace App\DTO\V1\Patient;
 
-class PatientStoreDTO
+use App\DTO\BaseDto;
+
+class PatientStoreDTO extends BaseDto
 {
     public string $name;
     public string $email;
@@ -11,21 +13,12 @@ class PatientStoreDTO
     public object|string $document_image;
 
     /**
-     * @param string $name
-     * @param string $email
-     * @param string $address
-     * @param string $phone_number
-     * @param $document_image
+     * @param array $attributes
      */
-    public function __construct(string $name, string $email, string $address, string $phone_number, $document_image)
+    public function __construct(array $attributes = [])
     {
-        $this->name = $name;
-        $this->email = $email;
-        $this->address = $address;
-        $this->phone_number = $phone_number;
-        $this->document_image = $document_image;
+        parent::__construct($attributes);
     }
-
 
     public function getName(): string
     {

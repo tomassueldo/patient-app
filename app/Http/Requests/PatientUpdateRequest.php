@@ -32,7 +32,7 @@ class PatientUpdateRequest extends FormRequest
         return [
             'name' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:50',
-            'phone_number' => 'nullable|string|max:12|regex:/^\d{12,}$/',
+            'phone_number' => 'nullable|string|max:16|regex:/^\d+$/',
             'document_image' => 'nullable|image|max:2048|mimes:png,jpg,jpeg',
         ];
     }
@@ -41,7 +41,7 @@ class PatientUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone_number.regex' => 'The phone number must be a valid number with at least 12 digits.',
+            'phone_number.regex' => 'The phone number must be a valid number with a maximum of 16 digits.',
             'document_image.image' => 'The document image must be a valid image file (png, jpg, jpeg) with a maximum size of 2MB.',
         ];
     }

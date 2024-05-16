@@ -35,16 +35,16 @@ class PatientStoreRequest extends FormRequest
             'name' => 'string|max:50|required',
             'email' => 'string|max:50|required|unique:App\Models\Patient,email',
             'address' => 'string|max:50|required',
-            'phone_number' => 'required|string|max:12|regex:/^\d{12,}$/',
-            'document_image' => 'required|image|max:2048|mimes:png,jpg,jpeg',
+            'phone_number' => 'required|string|max:16|regex:/^\d+$/',
+            'document_image' => 'required|image|max:2048|mimes:png,jpg,jpeg'
         ];
     }
 
     public function messages()
     {
         return [
-            'phone_number.regex' => 'The phone number must be a valid number with at least 12 digits.',
-            'document_image.image' => 'The document image must be a valid image file (png, jpg, jpeg) with a maximum size of 2MB.',
+            'phone_number.regex' => 'The phone number must be a valid number with a maximum of 16 digits.',
+            'document_image.image' => 'The document image must be a valid image file (png, jpg, jpeg) with a maximum size of 2MB.'
         ];
     }
 

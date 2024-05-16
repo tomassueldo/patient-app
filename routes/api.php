@@ -22,5 +22,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('/patients', PatientController::class);
-    Route::post('/send-sms/{idpatient}', [SmsController::class, 'sendSms']);
+    Route::post('/send-sms/{patient}', [SmsController::class, 'sendSms']);
 });

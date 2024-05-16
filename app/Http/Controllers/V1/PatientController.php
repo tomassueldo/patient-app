@@ -54,13 +54,7 @@ class PatientController extends BaseController
     public function store(PatientStoreRequest $request)
     {
         try {
-            $patientDto = new PatientStoreDTO(
-                $request->input('name'),
-                $request->input('email'),
-                $request->input('address'),
-                $request->input('phone_number'),
-                $request->file('document_image')
-            );
+            $patientDto = new PatientStoreDTO($request->all());
             $user = $this->patientService->store($patientDto);
             return response()->json($user, 201);
         } catch (Exception $e) {
@@ -75,10 +69,7 @@ class PatientController extends BaseController
     {
         $patientDto = new PatientUpdateDTO(
             $patient->id,
-            $request->input('name'),
-            $request->input('address'),
-            $request->input('phone_number'),
-            $request->file('document_image')
+            $request->all()
         );
         $user = $this->patientService->update($patientDto, $patient);
         return response()->json($user, 200);

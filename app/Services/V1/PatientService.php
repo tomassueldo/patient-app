@@ -5,7 +5,6 @@ namespace App\Services\V1;
 
 use App\DTO\V1\Patient\PatientStoreDTO;
 use App\DTO\V1\Patient\PatientUpdateDTO;
-use App\Exceptions\NotFoundException;
 use App\Jobs\SendConfirmationEmailJob;
 use App\Models\Patient;
 use App\Repositories\V1\PatientRepositoryInterface;
@@ -22,6 +21,7 @@ class PatientService
     }
 
     /**
+     * Retrieves all the patients stored
      * @return mixed
      * @throws \Exception
      */
@@ -35,6 +35,7 @@ class PatientService
     }
 
     /**
+     * Retrieves the information of the patient with the id passed by path parameter
      * @param Patient $patient
      * @return mixed
      */
@@ -44,6 +45,7 @@ class PatientService
     }
 
     /**
+     * Store a new record of patient and also save the image in storage
      * @param PatientStoreDTO $data
      * @return mixed
      * @throws \Exception
@@ -73,8 +75,9 @@ class PatientService
     }
 
     /**
+     * Updates the patient record using the id passed by path parameter
      * @param PatientUpdateDTO $data
-     * @param $id
+     * @param Patient $patient
      * @return mixed
      * @throws \Exception
      */
@@ -92,12 +95,14 @@ class PatientService
     }
 
     /**
+     * Delete from the database and the image from the storage the information of the patient passed by path parameter
      * @param Patient $patient
      * @return mixed
      */
     public function destroy(Patient $patient)
     {
         try {
+            $this->deleteOldImage($patient->document_image);
             return $this->patientRepository->destroy($patient);
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
@@ -105,6 +110,7 @@ class PatientService
     }
 
     /**
+     * Function that handles the validation of the email with the token stored in the register.
      * @param $token
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      * @throws \Exception
@@ -122,7 +128,7 @@ class PatientService
                 return view('user_already_validated');
             }
 
-            // Update the email validation date
+            // Update the email verification date and delete the token
             $patient->email_verified_at = now();
             $patient->email_verification_token = null;
             $patient->save();
@@ -134,6 +140,7 @@ class PatientService
     }
 
     /**
+     * Common function to store image in storage
      * @param $image
      * @return mixed
      * @throws \Exception
@@ -148,6 +155,7 @@ class PatientService
     }
 
     /**
+     * Common function to delete image
      * @param $image
      * @return void
      * @throws \Exception

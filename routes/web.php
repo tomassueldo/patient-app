@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::patch('/verify-email/{token}', [PatientController::class, 'updateEmailValidation'])->name('verify-email');
+Route::get('/verify-email/{token}', [PatientController::class, 'updateEmailValidation'])->name('verify-email');
 
 //Route::get('/', function () {
 //    return view('welcome');

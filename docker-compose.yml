@@ -16,6 +16,7 @@ services:
             APACHE_DOCUMENT_ROOT: /var/www/html/public
         depends_on:
             - db
+        container_name: my_app_container
 
     db:
         image: mysql:5.7
@@ -26,11 +27,15 @@ services:
             MYSQL_ROOT_PASSWORD: root
         volumes:
             - db_data:/var/lib/mysql
+        container_name: my_db_container
+
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
             - "9002:80"
         environment:
             - PMA_ARBITRARY=1
+        container_name: my_phpmyadmin_container
+
 volumes:
     db_data:

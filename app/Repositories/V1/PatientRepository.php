@@ -13,6 +13,7 @@ class PatientRepository implements PatientRepositoryInterface
 {
 
     /**
+     * Retrieves all the patients stored
      * @return \Illuminate\Database\Eloquent\Collection
      * @throws \Exception
      */
@@ -26,6 +27,7 @@ class PatientRepository implements PatientRepositoryInterface
     }
 
     /**
+     * Retrieves the information of the patient with the id passed by path parameter
      * @param $id
      * @return mixed
      * @throws PatientNotFoundException
@@ -41,6 +43,7 @@ class PatientRepository implements PatientRepositoryInterface
 
 
     /**
+     * Store a new record of patient
      * @param array $data
      * @return mixed
      * @throws \Exception
@@ -55,6 +58,7 @@ class PatientRepository implements PatientRepositoryInterface
     }
 
     /**
+     * Updates the patient record using the id passed by path parameter
      * @param array $data
      * @param Patient $patient
      * @return Patient
@@ -71,6 +75,7 @@ class PatientRepository implements PatientRepositoryInterface
     }
 
     /**
+     * Delete from the database the patient passed by path parameter
      * @param Patient $patient
      * @return bool|null
      * @throws \Exception
@@ -85,6 +90,7 @@ class PatientRepository implements PatientRepositoryInterface
     }
 
     /**
+     * Get the patient with the token given by parameter
      * @param $token
      * @return mixed
      * @throws \Exception

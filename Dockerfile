@@ -6,7 +6,9 @@ RUN echo "America/Argentina/Buenos_Aires" > /etc/timezone
 RUN apt-get update && \
     apt-get install -y \
     libzip-dev \
-    zip
+    zip \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Enable mod_rewrite
 RUN a2enmod rewrite
@@ -27,7 +29,7 @@ WORKDIR /var/www/html
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-#Installing project dependences
+# Set permissions and run composer install
 RUN chown -R www-data:www-data /var/www/html; \
     chmod 777 -R storage; \
-    composer install; \
+    composer install \

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de Registro</title>
+    <title>Registration Confirmation</title>
 </head>
 <body>
-<p>Hola {{ $patient->name }},</p>
+<p>Hello {{ $patient->name }},</p>
 
-<p>¡Gracias por registrarte en nuestro sitio!</p>
+<p>Thank you for registering on our site!</p>
 
-<p>Tu registro ha sido exitoso. Por favor, confirma tu correo electrónico haciendo clic en el siguiente enlace:</p>
+<p>Your registration was successful. Please confirm your email by clicking on the following link:</p>
 
-<a href="{{ url('/verify-email/'.$patient->email_verification_token ) }}">Confirmar Email</a>
+<a href="{{ url('/verify-email/'.$patient->email_verification_token ) }}">Confirm Email</a>
 
 </body>
 </html>

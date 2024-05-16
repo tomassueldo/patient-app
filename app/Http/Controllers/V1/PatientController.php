@@ -24,6 +24,7 @@ class PatientController extends BaseController
     }
 
     /**
+     * Retrieves all the patients stored
      * @return mixed
      * @throws Exception
      */
@@ -37,6 +38,7 @@ class PatientController extends BaseController
     }
 
     /**
+     * Retrieves the information of the patient with the id passed by path parameter
      * @param Patient $patient
      * @return JsonResponse
      */
@@ -47,6 +49,7 @@ class PatientController extends BaseController
     }
 
     /**
+     * Store a new record of patient
      * @param PatientStoreRequest $request
      * @return JsonResponse
      * @throws Exception
@@ -62,7 +65,12 @@ class PatientController extends BaseController
         }
     }
 
+
     /**
+     * Updates the patient record using the id passed by path parameter
+     * @param PatientUpdateRequest $request
+     * @param Patient $patient
+     * @return JsonResponse
      * @throws Exception
      */
     public function update(PatientUpdateRequest $request, Patient $patient)
@@ -76,22 +84,23 @@ class PatientController extends BaseController
     }
 
     /**
+     * Delete from the database the patient passed by path parameter
      * @param Patient $patient
-     * @return void
+     * @return \Illuminate\Http\Response
      * @throws Exception
      */
     public function destroy(Patient $patient)
     {
         try {
             $patient = $this->patientService->destroy($patient);
-            return response()->json($patient, 204);
-
+            return response()->noContent();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
 
     /**
+     *Function that handles the validation of the email with the token stored in the register.
      * @param $token
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      * @throws Exception

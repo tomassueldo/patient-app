@@ -20,16 +20,16 @@ Patient App is an API that has the following endpoints for a CRUD of patients:
 ## Installation
 Once inside the directory execute the following commands:
 ```
-$ cp .env.develop .env
-$ docker-compose up --build -d
+cp .env.develop .env
+docker-compose up --build -d
 ```
 Once finish the process of building the docker app, just in case, install all the dependencies with composer:
 ```
-$ docker exec my_app_container composer install
+docker exec my_app_container composer install
 ```
 The last one is for the Laravel migrations:
 ```
-$ docker exec my_app_container php artisan migrate
+docker exec my_app_container php artisan migrate
 ```
 
 ## Usage
@@ -43,7 +43,6 @@ Now that we have our docker app running, with the Apache server with PHP, MySQL,
     * Here you will have all the endpoints available for consumption, all you have to do is complete the request body parameters and the path parameters when it's necessary.
 
 ### A short video of the process of the store endpoint:
-
 
 
 

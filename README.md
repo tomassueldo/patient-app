@@ -11,7 +11,7 @@ Patient App is an API that has the following endpoints for a CRUD of patients:
  # DELETE /api/v1/patients/{patient} patients.destroy
  # POST /api/v1/send-sms/{idpatient}
 - And this one web for the email verification:
- - PATCH /verify-email/{token} verify-email
+ - GET /verify-email/{token} verify-email
 ```
 ## Requirments
 - [Docker](https://docs.docker.com/desktop/windows/install/)

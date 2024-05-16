@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class PatientStoreRequest extends FormRequest
+class PatientUpdateRequest extends FormRequest
 {
 
     /**
@@ -17,7 +16,6 @@ class PatientStoreRequest extends FormRequest
     {
         return [
             'name' => 'Name',
-            'email' => 'Email',
             'address' => 'Address',
             'phone_number' => 'Phone Number',
             'document_image' => 'Image Of Document'
@@ -32,13 +30,13 @@ class PatientStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:50|required',
-            'email' => 'string|max:50|required|unique:App\Models\Patient,email',
-            'address' => 'string|max:50|required',
-            'phone_number' => 'required|string|max:12|regex:/^\d{12,}$/',
-            'document_image' => 'required|image|max:2048|mimes:png,jpg,jpeg',
+            'name' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:50',
+            'phone_number' => 'nullable|string|max:12|regex:/^\d{12,}$/',
+            'document_image' => 'nullable|image|max:2048|mimes:png,jpg,jpeg',
         ];
     }
+
 
     public function messages()
     {
@@ -47,5 +45,6 @@ class PatientStoreRequest extends FormRequest
             'document_image.image' => 'The document image must be a valid image file (png, jpg, jpeg) with a maximum size of 2MB.',
         ];
     }
+
 
 }

@@ -14,15 +14,14 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('address');
             $table->string('phone_number');
-            $table->string('document_photo_name');
-            $table->string('document_photo_path');
+            $table->string('document_image');
+            $table->string('email_verification_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
 
-            $table->unique(['email', 'phone_number']);
         });
     }
 

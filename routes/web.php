@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\PatientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/verify-email/{token}', [PatientController::class, 'updateEmailValidation'])->name('verify-email');
 
 Route::get('/', function () {
     return view('welcome');

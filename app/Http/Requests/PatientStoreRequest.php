@@ -34,7 +34,7 @@ class PatientStoreRequest extends FormRequest
         return [
             'name' => 'string|max:50|required',
             'email' => 'string|max:50|required|unique:App\Models\Patient,email',
-            'address' => 'string|max:50|required',
+            'address' => 'string|max:100|required',
             'phone_number' => 'required|string|max:16|regex:/^\d+$/',
             'document_image' => 'required|image|max:2048|mimes:png,jpg,jpeg'
         ];

@@ -31,7 +31,7 @@ class PatientUpdateRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|max:50',
-            'address' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
             'phone_number' => 'nullable|string|max:16|regex:/^\d+$/',
             'document_image' => 'nullable|image|max:2048|mimes:png,jpg,jpeg',
         ];

@@ -6,6 +6,8 @@ use App\Exceptions\JsonNotFoundException;
 use App\Exceptions\PatientNotFoundException;
 use App\Models\Patient;
 use App\Repositories\V1\PatientRepositoryInterface;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
@@ -14,25 +16,26 @@ class PatientRepository implements PatientRepositoryInterface
 
     /**
      * Retrieves all the patients stored
-     * @return \Illuminate\Database\Eloquent\Collection
-     * @throws \Exception
+     * @return Collection
+     * @throws Exception
      */
-    public function index()
+    public function index(): Collection
     {
         try {
             return Patient::all();
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
+
 
     /**
      * Retrieves the information of the patient with the id passed by path parameter
      * @param $id
-     * @return mixed
+     * @return Patient
      * @throws PatientNotFoundException
      */
-    public function find($id)
+    public function find($id): Patient
     {
         try {
             return Patient::findOrFail($id);
@@ -46,14 +49,14 @@ class PatientRepository implements PatientRepositoryInterface
      * Store a new record of patient
      * @param array $data
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function store(array $data)
     {
         try {
             return Patient::create($data);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -62,30 +65,30 @@ class PatientRepository implements PatientRepositoryInterface
      * @param array $data
      * @param Patient $patient
      * @return Patient
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(array $data, Patient $patient)
     {
         try {
             $patient->update($data);
             return $patient;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
     /**
      * Delete from the database the patient passed by path parameter
      * @param Patient $patient
-     * @return bool|null
-     * @throws \Exception
+     * @return bool
+     * @throws Exception
      */
-    public function destroy(Patient $patient)
+    public function destroy(Patient $patient): bool
     {
         try {
             return $patient->delete();
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -93,14 +96,14 @@ class PatientRepository implements PatientRepositoryInterface
      * Get the patient with the token given by parameter
      * @param $token
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPatientWithToken($token)
     {
         try {
             return Patient::where('email_verification_token', $token)->first();
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 }

@@ -8,6 +8,11 @@ use App\DTO\V1\Patient\PatientUpdateDTO;
 use App\Jobs\SendConfirmationEmailJob;
 use App\Models\Patient;
 use App\Repositories\V1\PatientRepositoryInterface;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -23,14 +28,14 @@ class PatientService
     /**
      * Retrieves all the patients stored
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
-    public function index()
+    public function index(): Collection
     {
         try {
             return $this->patientRepository->index();
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -48,7 +53,7 @@ class PatientService
      * Store a new record of patient and also save the image in storage
      * @param PatientStoreDTO $data
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function store(PatientStoreDTO $data)
     {
@@ -69,8 +74,8 @@ class PatientService
             SendConfirmationEmailJob::dispatch($patient);
 
             return $patient;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -79,7 +84,7 @@ class PatientService
      * @param PatientUpdateDTO $data
      * @param Patient $patient
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(PatientUpdateDTO $data, Patient $patient)
     {
@@ -98,13 +103,14 @@ class PatientService
      * Delete from the database and the image from the storage the information of the patient passed by path parameter
      * @param Patient $patient
      * @return mixed
+     * @throws Exception
      */
-    public function destroy(Patient $patient)
+    public function destroy(Patient $patient): bool
     {
         try {
             $this->deleteOldImage($patient->document_image);
             return $this->patientRepository->destroy($patient);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
@@ -112,8 +118,8 @@ class PatientService
     /**
      * Function that handles the validation of the email with the token stored in the register.
      * @param $token
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
-     * @throws \Exception
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application
+     * @throws Exception
      */
     public function updateEmailValidation($token)
     {
@@ -134,8 +140,8 @@ class PatientService
             $patient->save();
 
             return view('email_validated');
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -143,14 +149,14 @@ class PatientService
      * Common function to store image in storage
      * @param $image
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     private function storeImage($image)
     {
         try {
             return $image->store('images', 'public');
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -158,14 +164,14 @@ class PatientService
      * Common function to delete image
      * @param $image
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     private function deleteOldImage($image)
     {
         try {
             Storage::delete($image);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 }

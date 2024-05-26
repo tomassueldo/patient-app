@@ -8,13 +8,16 @@ RUN apt-get update && \
     libzip-dev \
     zip \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install pdo_mysql zip gd && \
+    docker-php-ext-enable sodium && \
+    rm -rf /var/lib/apt/lists/*
 
 # Enable mod_rewrite
 RUN a2enmod rewrite
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql zip
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -32,4 +35,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set permissions and run composer install
 RUN chown -R www-data:www-data /var/www/html; \
     chmod 777 -R storage; \
-    composer install \
+    composer install

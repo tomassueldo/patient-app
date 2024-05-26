@@ -18,6 +18,12 @@ services:
         depends_on:
             - db
         container_name: my_app_container
+        deploy:
+            resources:
+                limits:
+                    cpus: '1'
+                    memory: '1g'
+
 
     db:
         image: mysql:5.7
@@ -30,6 +36,13 @@ services:
         volumes:
             - db_data:/var/lib/mysql
         container_name: my_db_container
+        deploy:
+            resources:
+                limits:
+                    cpus: '1'
+                    memory: '1g'
+
+
 
     phpmyadmin:
         image: phpmyadmin:latest

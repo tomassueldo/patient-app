@@ -4,13 +4,14 @@ namespace App\Http\Controllers\V1;
 
 use App\DTO\V1\Patient\PatientStoreDTO;
 use App\DTO\V1\Patient\PatientUpdateDTO;
-use App\Exceptions\JsonNotFoundException;
 use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Models\Patient;
 use App\Services\V1\PatientService;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
 class PatientController extends BaseController
@@ -25,10 +26,10 @@ class PatientController extends BaseController
 
     /**
      * Retrieves all the patients stored
-     * @return mixed
+     * @return Collection
      * @throws Exception
      */
-    public function index()
+    public function index(): Collection
     {
         try {
             return $this->patientService->index();
@@ -42,7 +43,7 @@ class PatientController extends BaseController
      * @param Patient $patient
      * @return JsonResponse
      */
-    public function show(Patient $patient)
+    public function show(Patient $patient): JsonResponse
     {
         $user = $this->patientService->find($patient);
         return response()->json($user, 200);
@@ -54,7 +55,7 @@ class PatientController extends BaseController
      * @return JsonResponse
      * @throws Exception
      */
-    public function store(PatientStoreRequest $request)
+    public function store(PatientStoreRequest $request): JsonResponse
     {
         try {
             $patientDto = new PatientStoreDTO($request->all());
@@ -73,7 +74,7 @@ class PatientController extends BaseController
      * @return JsonResponse
      * @throws Exception
      */
-    public function update(PatientUpdateRequest $request, Patient $patient)
+    public function update(PatientUpdateRequest $request, Patient $patient): JsonResponse
     {
         $patientDto = new PatientUpdateDTO(
             $patient->id,
@@ -86,10 +87,10 @@ class PatientController extends BaseController
     /**
      * Delete from the database the patient passed by path parameter
      * @param Patient $patient
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws Exception
      */
-    public function destroy(Patient $patient)
+    public function destroy(Patient $patient): Response
     {
         try {
             $patient = $this->patientService->destroy($patient);

@@ -43,6 +43,12 @@ Now that we have our docker app running, with the Apache server with PHP, MySQL,
     * Here you will have all the endpoints available for consumption, all you have to do is complete the request body parameters and the path parameters when it's necessary.
 * Postman Repository: Additionally, if you prefer, you can try the API with Postman by downloading the collection from the folder /storage/attachments.
 
+## Testing
+You can test the patient endpoints with the PestPHP tool by running this command:
+```
+docker exec my_app_container ./vendor/bin/pest --group=patient
+```
+
 ### A short video of the process of the store endpoint:
 ![chrome_EGiKW6T59Z](https://github.com/tomassueldo/patient-app/assets/84208722/3b630368-66fa-4bdb-92f0-56e43bff3b5c)
 

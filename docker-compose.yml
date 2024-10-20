@@ -17,13 +17,13 @@ services:
             TZ: "America/Argentina/Buenos_Aires"
         depends_on:
             - db
+            - redis  # Añadido aquí para asegurar que Redis esté disponible
         container_name: my_app_container
         deploy:
             resources:
                 limits:
                     cpus: '1'
                     memory: '1g'
-
 
     db:
         image: mysql:5.7
@@ -42,8 +42,6 @@ services:
                     cpus: '1'
                     memory: '1g'
 
-
-
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
@@ -51,6 +49,17 @@ services:
         environment:
             - PMA_ARBITRARY=1
         container_name: my_phpmyadmin_container
+
+    redis:  # Servicio de Redis agregado
+        image: redis:latest
+        ports:
+            - "6379:6379"  # Puertos de Redis
+        container_name: my_redis_container
+        deploy:
+            resources:
+                limits:
+                    cpus: '1'
+                    memory: '1g'
 
 volumes:
     db_data:

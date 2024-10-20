@@ -7,6 +7,7 @@ use App\DTO\V1\Patient\PatientStoreDTO;
 use App\DTO\V1\Patient\PatientUpdateDTO;
 use App\Jobs\SendConfirmationEmailJob;
 use App\Models\Patient;
+use App\Repositories\V1\PatientRepository;
 use App\Repositories\V1\PatientRepositoryInterface;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -19,7 +20,7 @@ use Illuminate\Support\Str;
 class PatientService
 {
     public function __construct(
-        protected PatientRepositoryInterface $patientRepository
+        protected PatientRepository $patientRepository
     )
     {
         $this->patientRepository = $patientRepository;

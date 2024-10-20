@@ -9,6 +9,7 @@ use App\Repositories\V1\PatientRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class PatientRepository implements PatientRepositoryInterface
@@ -22,7 +23,9 @@ class PatientRepository implements PatientRepositoryInterface
     public function index(): Collection
     {
         try {
-            return Patient::all();
+            return Cache::remember('users', 10, function () {
+                return Patient::all();
+            });
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

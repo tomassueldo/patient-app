@@ -22,5 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('/patients', PatientController::class);
+
+    Route::get('/patients-appointments-woc', [PatientController::class , 'appointmentsWithOutCache']);
+    Route::get('/patients-appointments-wc', [PatientController::class , 'appointmentsWithCache']);
+
     Route::post('/send-sms/{patient}', [SmsController::class, 'sendSms']);
 });

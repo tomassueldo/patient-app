@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -171,6 +172,34 @@ class PatientService
     {
         try {
             Storage::delete($image);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Retrieves all the patients and their appointments without cache
+     * @return Collection
+     * @throws Exception
+     */
+    public function appointmentsWithOutCache(): Collection
+    {
+        try {
+            return $this->patientRepository->appointmentsWithOutCache();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Retrieves all the patients and their appointments with cache
+     * @return Collection
+     * @throws Exception
+     */
+    public function appointmentsWithCache(): Collection
+    {
+        try {
+            return $this->patientRepository->appointmentsWithCache();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

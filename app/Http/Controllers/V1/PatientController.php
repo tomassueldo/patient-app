@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
 
 class PatientController extends BaseController
@@ -110,6 +111,36 @@ class PatientController extends BaseController
     {
         try {
             return $this->patientService->updateEmailValidation($token);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Retrieves all the patients and their appointments without cache
+     * @return Collection
+     * @throws Exception
+     */
+    public function appointmentsWithOutCache(): Collection
+    {
+        try {
+            return $this->patientService->appointmentsWithOutCache();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Retrieves all the patients and their appointments with cache
+     * @return Collection
+     * @throws Exception
+     */
+    public function appointmentsWithCache(): string
+    {
+        try {
+            return $this->patientService->appointmentsWithCache();
+
+
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

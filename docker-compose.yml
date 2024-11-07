@@ -22,8 +22,8 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '1'
-                    memory: '1g'
+                    cpus: '4'
+                    memory: '3g'
 
     db:
         image: mysql:5.7
@@ -39,8 +39,8 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '1'
-                    memory: '1g'
+                    cpus: '2'
+                    memory: '2g'
 
     phpmyadmin:
         image: phpmyadmin:latest
@@ -58,8 +58,8 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '1'
-                    memory: '1g'
+                    cpus: '2'
+                    memory: '2g'
 
 volumes:
     db_data:

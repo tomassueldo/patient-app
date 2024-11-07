@@ -9,7 +9,11 @@ use App\Repositories\V1\PatientRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class PatientRepository implements PatientRepositoryInterface
@@ -105,6 +109,54 @@ class PatientRepository implements PatientRepositoryInterface
     {
         try {
             return Patient::where('email_verification_token', $token)->first();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Retrieves all the patients and their appointments without cache
+     * @return Collection
+     * @throws Exception
+     */
+    public function appointmentsWithOutCache(): Collection
+    {
+        try {
+            $start = microtime(true);
+
+            $test = Patient::select('*')
+                ->with(['appointments' => function ($query) {
+                    $query->select('*');
+                }])
+                ->get();
+            $time_elapsed = number_format((microtime(true) - $start), 2);
+            Log::info('Tiempo sin cache: ' . $time_elapsed . ' segundos');
+            return $test->take(100);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Retrieves all the patients and their appointments with cache
+     * @return Collection
+     * @throws Exception
+     */
+    public function appointmentsWithCache(): Collection
+    {
+        try {
+            $start = microtime(true);
+            $result = Cache::remember('patients_with_appointments', 180, function () {
+                return Patient::select('*')
+                    ->with(['appointments' => function ($query) {
+                        $query->select('*');
+                    }])
+                    ->get();
+            });
+            $time_elapsed = number_format((microtime(true) - $start), 2);
+            Log::info('Tiempo con cache: ' . $time_elapsed . ' segundos');
+//            $result = Cache::get('patients_with_appointments');
+            return $result->take(100);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

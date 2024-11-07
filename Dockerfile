@@ -18,7 +18,7 @@ RUN apt-get update && \
     docker-php-ext-enable redis && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/memory-limit.ini
+RUN echo "memory_limit=1024M" >> /usr/local/etc/php/conf.d/memory-limit.ini
 
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
